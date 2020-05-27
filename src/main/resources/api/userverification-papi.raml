@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: UserVerification-PAPI
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/873da825-7ca3-46d1-8865-54dd0e62721d/ # baseUri: localhost/api
+description: This is Process API which has orchestration logic to handle the incoming requests and routes them to various involved system APIs (each system API connected to respective backends) and return back the responses from backends.
+mediaType:
+  - application/json
+types:
+  userrequest: !include Types/userrequest.raml
+version: v1
+protocols:
+  - HTTP
+/verifyuser:
+  get:
+    displayName: VerifyUser
+    description: This is Query request with JSON request and response is boolean value
+    body:
+      application/json:
+        type: userrequest
+        example: !include Examples/userrequest.json
+          
+    responses:
+      "200":
+        body:
+            application/json:
+              example: {"Allowed" : "true"}
+
+                                

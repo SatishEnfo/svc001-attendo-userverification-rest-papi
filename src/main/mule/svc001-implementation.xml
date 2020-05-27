@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="64bf19fd-5136-49e9-ad8c-04743940d4da" >
+		<http:request-connection host="0.0.0.0" port="8091" />
+	</http:request-config>
+	<sub-flow name="svc001-implementationSub_Flow" doc:id="afd5d3c8-d7cd-4b99-bf30-e1527feb33d6" >
+		<set-variable value="#[payload.CareUnitHsaIdentity]" doc:name="CareUnitHsaIdentity" doc:id="65bed767-325e-4538-be48-900078e0d577" variableName="CareUnitHsaIdentity"/>
+		<tracking:custom-event doc:name="BIP Logging-start" doc:id="78586237-d55a-4285-ab93-49b4587b86b2" event-name="Start"/>
+		<choice doc:name="Choice" doc:id="ee8ee8ac-beab-4271-a2d1-c6a54282288b" >
+			<when expression='#[vars.CareUnitHsaIdentity=="AS1"]'>
+				<flow-ref doc:name="invokeAS1" doc:id="e052c0e4-9944-4831-8031-d50c37e393e0" name="svc001-invokeAS1"/>
+			</when>
+			<when expression='#[vars.CareUnitHsaIdentity=="AS2"]'>
+				<flow-ref doc:name="invokeAS2" doc:id="57ffa853-b2b1-4c96-8b4e-0ed813e34560" name="svc001-invokeAS2"/>
+			</when>
+			<when expression='#[vars.CareUnitHsaIdentity=="AS3"]'>
+				<flow-ref doc:name="invokeAS3" doc:id="9a61c095-0d6b-405e-9437-74ffc6b817c9" name="svc001-invokeAS3"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="9e2fbcef-7ed2-4380-9e45-dd650c33f1f9" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	Errorcode: "500",
+	ErrorDescription: "unknown identifier"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+		<tracking:custom-event doc:name="BIP Logging End" doc:id="82629d71-bb81-45fd-ade0-95164fe7b2b6" event-name="End"/>
+	</sub-flow>
+	<sub-flow name="svc001-invokeAS1" doc:id="98c509d0-cab4-4d0c-8a48-fbaa337035ff" >
+		<http:request method="GET" doc:name="Request" doc:id="b33c8c6d-8dd6-49a8-a52f-c8869ac1b285" config-ref="HTTP_Request_configuration" path="/user"/>
+	</sub-flow>
+	<sub-flow name="svc001-invokeAS2" doc:id="f06ff221-767d-4e3f-9351-f5b17e17fcd8" >
+		<ee:transform doc:name="Transform Message" doc:id="1dcfea02-c444-4156-87a1-5eb099ed0814" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="svc001-invokeAS3" doc:id="3b49d18a-e8b0-4426-8236-9f6d6ca1b2b3" >
+		<ee:transform doc:name="Transform Message" doc:id="71940350-9620-404d-a92c-bdfcca84196c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

@@ -3,8 +3,8 @@
     <http:listener-config name="userverification-papi-2-httpListenerConfig">
         <http:listener-connection host="0.0.0.0" port="8082" />
     </http:listener-config>
-    <apikit:config name="userverification-papi-2-config" api="userverification-papi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <flow name="userverification-papi-2-main">
+    <apikit:config name="userverification-papi-2-config" api="api\userverification-papi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="userverification-papi-main">
         <http:listener config-ref="userverification-papi-2-httpListenerConfig" path="/api/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>
@@ -96,7 +96,7 @@ output application/json
             </on-error-propagate>
         </error-handler>
     </flow>
-    <flow name="userverification-papi-2-console">
+    <flow name="userverification-papi-console">
         <http:listener config-ref="userverification-papi-2-httpListenerConfig" path="/console/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers>#[vars.outboundHeaders default {}]</http:headers>

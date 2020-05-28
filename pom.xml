@@ -4,7 +4,7 @@
 
 	<groupId>com.mycompany</groupId>
 	<artifactId>svc001-attendo-userverification-rest-papi</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
 	<name>svc001-attendo-userverification-rest-papi</name>
@@ -28,6 +28,25 @@
 				<configuration>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-maven-plugin</artifactId>
+                <version>${mule.maven.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                       <cloudHubDeployment>
+                              <uri>https://anypoint.mulesoft.com</uri>
+                              <muleVersion>4.2.2</muleVersion>
+                              <server>anypointPlatform</server>
+                              <applicationName>${artifactId}</applicationName>
+                              <environment>${cloud.env}</environment>
+                              <workerType>${cloudhub.workerType}</workerType>
+                             <properties>
+                                    <key>value</key>
+                             </properties>
+                       </cloudHubDeployment>
+                </configuration>
+            </plugin>
 		<plugin>
                 <groupId>com.mulesoft.munit.tools</groupId>
                 <artifactId>munit-maven-plugin</artifactId>
@@ -51,25 +70,7 @@
                     </coverage>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.mule.tools.maven</groupId>
-                <artifactId>mule-maven-plugin</artifactId>
-                <version>${mule.maven.plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                       <cloudHubDeployment>
-                              <uri>https://anypoint.mulesoft.com</uri>
-                              <muleVersion>4.2.2</muleVersion>
-                              <server>anypointPlatform</server>
-                              <applicationName>${artifactId}</applicationName>
-                              <environment>${cloud.env}</environment>
-                              <workerType>${cloudhub.workerType}</workerType>
-                             <properties>
-                                    <key>value</key>
-                             </properties>
-                       </cloudHubDeployment>
-                </configuration>
-            </plugin>
+            
         </plugins>
 	</build>
 
@@ -85,13 +86,6 @@
             <artifactId>mule-sockets-connector</artifactId>
             <version>1.1.5</version>
             <classifier>mule-plugin</classifier>
-        </dependency>
-		<dependency>
-            <groupId>43ce019d-f13a-4391-a0d8-f0bbabdeef46</groupId>
-            <artifactId>userverification-papi</artifactId>
-            <version>0.0.1</version>
-            <classifier>raml</classifier>
-            <type>zip</type>
         </dependency>
     	<dependency>
             <groupId>org.mule.modules</groupId>

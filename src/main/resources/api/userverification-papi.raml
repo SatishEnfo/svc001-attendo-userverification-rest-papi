@@ -1,12 +1,12 @@
 #%RAML 1.0
 title: UserVerification-PAPI
-baseUri: localhost/api
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/183486df-9237-489b-b3d6-9fbcea36e53d/ # baseUri: http://svc001-attendo-userverification-rest-papi.us-e1.cloudhub.io/api
 description: This is Process API which has orchestration logic to handle the incoming requests and routes them to various involved system APIs (each system API connected to respective backends) and return back the responses from backends.
 mediaType:
   - application/json
 types:
   userrequest: !include Types/userrequest.raml
-version: v1
+version: v2
 protocols:
   - HTTP
 /verifyuser:
@@ -23,5 +23,13 @@ protocols:
         body:
             application/json:
               example: {"Allowed" : "true"}
-
-                                
+/healthcheck:
+  get:
+    displayName: Healthcheck
+    description: This resource gives the health of the API
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              value: {"Message" : "I am Alive"}

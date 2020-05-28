@@ -8,12 +8,16 @@
 		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<munit:config name="svc001-userverification-interface-test-suite.xml" />
-	<munit:test name="svc001-userverification-interface-test-suite-get:\verifyuser:application\json:userverification-papi-configTest" doc:id="e2b38e8a-a536-422e-9b45-36248e8c0107" description="Test">
+	<munit:config name="userverification-papi-2-test-suite.xml" />
+	<munit:test name="userverification-papi-2-test-suite-get:\verifyuser:application\json:userverification-papi-2-configTest" doc:id="81d2dd68-5375-4b00-b341-e623d7873095" description="Test">
 		<munit:execution >
-			<ee:transform doc:name="Transform Message" doc:id="e39f7d3a-9387-42a8-8266-46d76e5af060" >
-				<ee:message >
-					<ee:set-payload ><![CDATA[{
+			<ee:transform doc:name="Transform Message" doc:id="1ff76163-09d3-4813-873c-d0cf9c0f5cf4">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+			
+{
  "Performer" : "SEI009",
  "SubjectOfCareId" : "1986726289",
  "CareUnitHsaIdentity" : "AS1",
@@ -21,10 +25,11 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 }]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
-			<flow-ref doc:name="Flow-ref to get:\verifyuser:application\json:userverification-papi-config" doc:id="c97cf015-6fe1-4016-a859-28f997839b4b" name="get:\verifyuser:application\json:userverification-papi-config"/>
+			<flow-ref doc:name="Flow-ref to get:\verifyuser:application\json:userverification-papi-2-config" doc:id="d0dd92d5-d2c5-4314-9d14-2e3a4d8e0f80" name="get:\verifyuser:application\json:userverification-papi-2-config"/>
+			<logger level="INFO" doc:name="Logger" doc:id="f1137dfc-e096-4c35-b7cc-b93aa45e8515" message="#[payload]"/>
 		</munit:execution>
 		<munit:validation >
-			<munit-tools:assert-that doc:name="Assert that" doc:id="78382410-f972-4912-a582-5942c07cc7da" expression="#[payload.Allowed]" is="#[MunitTools::notNullValue()]"/>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="2ec27793-a7d8-42da-987d-497fc2ffdf62" expression="#[payload.Allowed]" is="#[MunitTools::notNullValue()]"/>
 		</munit:validation>
 	</munit:test>
 

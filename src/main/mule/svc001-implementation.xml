@@ -11,7 +11,6 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 	</http:request-config>
 	<sub-flow name="svc001-implementationSub_Flow" doc:id="afd5d3c8-d7cd-4b99-bf30-e1527feb33d6" >
 		<set-variable value="#[payload.CareUnitHsaIdentity]" doc:name="CareUnitHsaIdentity" doc:id="65bed767-325e-4538-be48-900078e0d577" variableName="CareUnitHsaIdentity"/>
-		<tracking:custom-event doc:name="BIP Logging-start" doc:id="78586237-d55a-4285-ab93-49b4587b86b2" event-name="Start"/>
 		<choice doc:name="Choice" doc:id="ee8ee8ac-beab-4271-a2d1-c6a54282288b" >
 			<when expression='#[vars.CareUnitHsaIdentity=="AS1"]'>
 				<flow-ref doc:name="invokeAS1" doc:id="e052c0e4-9944-4831-8031-d50c37e393e0" name="svc001-invokeAS1"/>
@@ -36,18 +35,27 @@ output application/json
 				</ee:transform>
 			</otherwise>
 		</choice>
-		<tracking:custom-event doc:name="BIP Logging End" doc:id="82629d71-bb81-45fd-ade0-95164fe7b2b6" event-name="End"/>
 	</sub-flow>
 	<sub-flow name="svc001-invokeAS1" doc:id="98c509d0-cab4-4d0c-8a48-fbaa337035ff" >
-		<http:request method="GET" doc:name="Request" doc:id="b33c8c6d-8dd6-49a8-a52f-c8869ac1b285" config-ref="HTTP_Request_configuration" path="/user"/>
-	</sub-flow>
-	<sub-flow name="svc001-invokeAS2" doc:id="f06ff221-767d-4e3f-9351-f5b17e17fcd8" >
-		<ee:transform doc:name="Transform Message" doc:id="1dcfea02-c444-4156-87a1-5eb099ed0814" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+		<ee:transform doc:name="Transform Message" doc:id="1dcfea02-c444-4156-87a1-5eb099ed0814">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
 ---
 {
+  Allowed: "true"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="svc001-invokeAS2" doc:id="f06ff221-767d-4e3f-9351-f5b17e17fcd8" >
+		<ee:transform doc:name="Transform Message" doc:id="a7aafd3d-561a-4826-a6f8-49552be98273" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  Allowed: "true"
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
@@ -56,9 +64,10 @@ output application/java
 		<ee:transform doc:name="Transform Message" doc:id="71940350-9620-404d-a92c-bdfcca84196c" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+output application/json
 ---
 {
+  Allowed: "true"
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>

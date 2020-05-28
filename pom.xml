@@ -37,9 +37,9 @@
                 <configuration>
                        <cloudHubDeployment>
                               <uri>https://anypoint.mulesoft.com</uri>
-                              <muleVersion>4.2.2</muleVersion>
+                              <muleVersion>${app.runtime}</muleVersion>
                               <server>anypointPlatform</server>
-                              <applicationName>${artifactId}</applicationName>
+                              <applicationName>${project.artifactId}</applicationName>
                               <environment>${cloud.env}</environment>
                               <workerType>${cloudhub.workerType}</workerType>
                              <properties>

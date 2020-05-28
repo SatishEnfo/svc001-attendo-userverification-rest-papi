@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
-	<artifactId>svc001-attendo-userverification-rest-papi</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+	<artifactId>svc1002-attendo-userverification-rest-papi</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>svc001-attendo-userverification-rest-papi</name>
+	<name>svc1002-attendo-userverification-rest-papi</name>
 
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

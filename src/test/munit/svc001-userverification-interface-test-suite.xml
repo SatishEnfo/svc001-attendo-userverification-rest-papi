@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<munit:config name="svc001-userverification-interface-test-suite.xml" />
+	<munit:test name="svc001-userverification-interface-test-suite-get:\verifyuser:application\json:userverification-papi-configTest" doc:id="e2b38e8a-a536-422e-9b45-36248e8c0107" description="Test">
+		<munit:execution >
+			<ee:transform doc:name="Transform Message" doc:id="e39f7d3a-9387-42a8-8266-46d76e5af060" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[{
+ "Performer" : "SEI009",
+ "SubjectOfCareId" : "1986726289",
+ "CareUnitHsaIdentity" : "AS1",
+ "CareGiverHsaIdentity" : "HY80H"
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<flow-ref doc:name="Flow-ref to get:\verifyuser:application\json:userverification-papi-config" doc:id="c97cf015-6fe1-4016-a859-28f997839b4b" name="get:\verifyuser:application\json:userverification-papi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="78382410-f972-4912-a582-5942c07cc7da" expression="#[payload.Allowed]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

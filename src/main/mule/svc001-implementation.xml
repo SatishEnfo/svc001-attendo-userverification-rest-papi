@@ -13,13 +13,13 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 		<set-variable value="#[payload.CareUnitHsaIdentity]" doc:name="CareUnitHsaIdentity" doc:id="65bed767-325e-4538-be48-900078e0d577" variableName="CareUnitHsaIdentity"/>
 		<choice doc:name="Choice" doc:id="ee8ee8ac-beab-4271-a2d1-c6a54282288b" >
 			<when expression='#[vars.CareUnitHsaIdentity=="AS1"]'>
-				<flow-ref doc:name="invokeAS1" doc:id="e052c0e4-9944-4831-8031-d50c37e393e0" name="svc001-invokeAS1"/>
+				<flow-ref doc:name="invokeEHR1" doc:id="e052c0e4-9944-4831-8031-d50c37e393e0" name="svc001-invokeEHR1"/>
 			</when>
 			<when expression='#[vars.CareUnitHsaIdentity=="AS2"]'>
-				<flow-ref doc:name="invokeAS2" doc:id="57ffa853-b2b1-4c96-8b4e-0ed813e34560" name="svc001-invokeAS2"/>
+				<flow-ref doc:name="invokeEHR2" doc:id="57ffa853-b2b1-4c96-8b4e-0ed813e34560" name="svc001-invokeEHR2"/>
 			</when>
 			<when expression='#[vars.CareUnitHsaIdentity=="AS3"]'>
-				<flow-ref doc:name="invokeAS3" doc:id="9a61c095-0d6b-405e-9437-74ffc6b817c9" name="svc001-invokeAS3"/>
+				<flow-ref doc:name="invokeEHR3" doc:id="9a61c095-0d6b-405e-9437-74ffc6b817c9" name="svc001-invokeEHR3"/>
 			</when>
 			<otherwise >
 				<ee:transform doc:name="Transform Message" doc:id="9e2fbcef-7ed2-4380-9e45-dd650c33f1f9" >
@@ -36,7 +36,7 @@ output application/json
 			</otherwise>
 		</choice>
 	</sub-flow>
-	<sub-flow name="svc001-invokeAS1" doc:id="98c509d0-cab4-4d0c-8a48-fbaa337035ff" >
+	<sub-flow name="svc001-invokeEHR1" doc:id="98c509d0-cab4-4d0c-8a48-fbaa337035ff" >
 		<ee:transform doc:name="Transform Message" doc:id="1dcfea02-c444-4156-87a1-5eb099ed0814">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0
@@ -48,7 +48,7 @@ output application/json
 			</ee:message>
 		</ee:transform>
 	</sub-flow>
-	<sub-flow name="svc001-invokeAS2" doc:id="f06ff221-767d-4e3f-9351-f5b17e17fcd8" >
+	<sub-flow name="svc001-invokeEHR2" doc:id="f06ff221-767d-4e3f-9351-f5b17e17fcd8" >
 		<ee:transform doc:name="Transform Message" doc:id="a7aafd3d-561a-4826-a6f8-49552be98273" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -60,7 +60,7 @@ output application/json
 			</ee:message>
 		</ee:transform>
 	</sub-flow>
-	<sub-flow name="svc001-invokeAS3" doc:id="3b49d18a-e8b0-4426-8236-9f6d6ca1b2b3" >
+	<sub-flow name="svc001-invokeEHR3" doc:id="3b49d18a-e8b0-4426-8236-9f6d6ca1b2b3" >
 		<ee:transform doc:name="Transform Message" doc:id="71940350-9620-404d-a92c-bdfcca84196c" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
